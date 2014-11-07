@@ -59,5 +59,16 @@ object Grid {
       Console.println( l.blockLengths().mkString(","))
     }
   }
+
+  def printPossibleCounts( grid : Grid ) = {
+    Console.println( "possibles")
+    Console.println( "rows")
+    val rcounts = grid.rows.map( _.possibles.length )
+    Console.println( rcounts.mkString(",") )
+    Console.println( "cols")
+    val ccounts = grid.cols.map( _.possibles.length )
+    Console.println( ccounts.mkString(",") )
+
+  }
 }
 

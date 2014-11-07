@@ -9,8 +9,29 @@ class Line {
   val blocks = ListBuffer[Block]()
   val possibles = ListBuffer[String]()
 
+  var blockLens = ListBuffer[Int]()
+  var blockSums = -1
 
-  def blockLengths() : ListBuffer[Int] = { blocks.map( _.len ) }
-  def blockSum() : ListBuffer[Int] = { blocks.map( _.len ) }
+
+  def blockLengths() : ListBuffer[Int] = {
+    if( blockLens.isEmpty ){
+      blockLens = blocks.map( _.len )
+    }
+    blockLens
+  }
+  def blockSum() : Int = {
+    if( blockSums == -1 ) {
+      val lens = blockLengths()
+      blockSums = lens.foldLeft(0)((i, l) => {
+        i + l
+      })
+    }
+    blockSums
+  }
+
+
+  def unsolved() : List[Line] = {
+    List(this)
+  }
 
 }

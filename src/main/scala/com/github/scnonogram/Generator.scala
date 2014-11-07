@@ -32,12 +32,14 @@ object Generator {
     val bitCount = count(s)
     val blocks = stringToBlocks(s)
     val blockLengths = blocks.map( (b) => { b.len } )
-    for( row <- grid.rows ){
-      addPossible( row, s, bitCount, blocks, blockLengths )
-    }
-    for( col <- grid.cols ){
-      addPossible( col, s, bitCount, blocks, blockLengths )
-    }
+
+        for( row <- grid.rows ) {
+          addPossible(row, s, bitCount, blocks, blockLengths)
+        }
+
+        for( col <- grid.cols ) {
+          addPossible(col, s, bitCount, blocks, blockLengths)
+        }
   }
 
   def addPossible( line : Line, s : String, bitCount : Int, blocks : ListBuffer[Block], blockLengths : ListBuffer[Int] ) : Unit = {

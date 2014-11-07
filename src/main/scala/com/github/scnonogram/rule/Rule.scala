@@ -1,5 +1,9 @@
 package com.github.scnonogram.rule
 
-class Rule {
+import com.github.scnonogram.Grid
+
+abstract class Rule {
+
+  def apply( grid : Grid ) : Int
 
 }

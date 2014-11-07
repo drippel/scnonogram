@@ -10,11 +10,12 @@ object Solver {
     Console.println("solver")
 
     val grid = Parser.parse(Parser.example2)
-
-    Grid.print(grid)
-
     Generator.possibles(grid)
 
+    Grid.print(grid)
     Grid.printHints(grid)
+    Grid.printPossibleCounts(grid)
+
+
   }
 }
