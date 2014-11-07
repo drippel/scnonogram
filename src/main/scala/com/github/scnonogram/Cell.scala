@@ -3,9 +3,9 @@ package com.github.scnonogram
 class Cell( var state : CellState = Unsolved() ) {
 
   def solved() : Boolean = { filled() || blank() }
-  def filled() : Boolean = { state == Filled }
-  def blank() : Boolean = { state == Blank }
-  def unsolved() : Boolean = { state == Unsolved }
+  def filled() : Boolean = { state == Filled() }
+  def blank() : Boolean = { state == Blank() }
+  def unsolved() : Boolean = { state == Unsolved() }
 
   override def toString() : String = {
     state match {

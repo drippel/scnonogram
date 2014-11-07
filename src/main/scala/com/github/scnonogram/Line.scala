@@ -7,7 +7,7 @@ class Line {
   val cells = ListBuffer[Cell]()
   val subLines = ListBuffer[Cell]()
   val blocks = ListBuffer[Block]()
-  val possibles = ListBuffer[String]()
+  var possibles = ListBuffer[String]()
 
   var blockLens = ListBuffer[Int]()
   var blockSums = -1
@@ -34,4 +34,24 @@ class Line {
     List(this)
   }
 
+  def fill( pos : Int ) = {
+    cells(pos).state = Filled()
+  }
+
+  def reducePossibles() = {
+
+    for( i <- 0 until cells.length ) {
+      val c = cells(i)
+      c.state match {
+        case Filled() => {
+          possibles = possibles.filter( (s) => { s(i) == '1' })
+        }
+        case Blank() => {
+          possibles = possibles.filter( (s) => { s(i) == '0' })
+        }
+        case _ => {}
+      }
+    }
+
+  }
 }

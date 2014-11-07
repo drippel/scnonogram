@@ -29,6 +29,16 @@ class Grid(val size : Int ) {
     }
     rs.toList
   }
+
+
+  def reducePossibles() = {
+    for( r <- rows ){
+      r.reducePossibles()
+    }
+    for( r <- cols ){
+      r.reducePossibles()
+    }
+  }
 }
 
 object Grid {

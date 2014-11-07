@@ -1,5 +1,7 @@
 package com.github.scnonogram
 
+import com.github.scnonogram.rule.Overlap
+
 class Solver {
 
 }
@@ -16,6 +18,10 @@ object Solver {
     Grid.printHints(grid)
     Grid.printPossibleCounts(grid)
 
+    Overlap.apply(grid)
+    grid.reducePossibles()
 
+    Grid.print(grid)
+    Grid.printPossibleCounts(grid)
   }
 }
