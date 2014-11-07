@@ -4,28 +4,28 @@ import scala.collection.mutable.ListBuffer
 
 class Grid(val size : Int ) {
 
-  val cells = Array.fill(size,size){-1}
+  val cells = Array.fill(size,size){ new Cell() }
 
   val rows = {
-    val rs = ListBuffer[List[Int]]()
+    val rs = ListBuffer[Line]()
     for( y <- 0 until size ){
-      val r = ListBuffer[Int]()
+      val r = new Line()
       for( x <- 0 until size ){
-        r += cells(x)(y)
+        r.cells += cells(x)(y)
       }
-      rs += r.toList
+      rs += r
     }
     rs.toList
   }
 
   val cols = {
-    val rs = ListBuffer[List[Int]]()
+    val rs = ListBuffer[Line]()
     for( x <- 0 until size ){
-      val r = ListBuffer[Int]()
+      val r = new Line()
       for( y <- 0 until size ){
-        r += cells(x)(y)
+        r.cells += cells(x)(y)
       }
-      rs += r.toList
+      rs += r
     }
     rs.toList
   }
@@ -34,13 +34,30 @@ class Grid(val size : Int ) {
 object Grid {
 
   def print( grid : Grid ) = {
-
-    for( r <- grid.rows ){
-      for( i <- r ){
-        Console.print(i)
+    for( i <- 0 until grid.rows.length ){
+      Console.print(" | ")
+      for( j <- 0 until grid.rows(i).cells.length ){
+        Console.print( grid.rows(i).cells(j) )
+          if( ( j + 1 ) % 5 == 0 ){
+            Console.print(" | ")
+          }
       }
       Console.print("\n")
+      if( (i + 1) % 5 == 0 ){
+        Console.print("\n")
+      }
     }
+  }
 
+  def printHints( grid : Grid ) = {
+    Console.println("Cols:")
+    for( l <- grid.cols ){
+      Console.println( l.blockLengths().mkString(","))
+    }
+    Console.println("Rows:")
+    for( l <- grid.rows ){
+      Console.println( l.blockLengths().mkString(","))
+    }
   }
 }
+
