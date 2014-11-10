@@ -26,4 +26,8 @@ class BaseTest {
   def assertFilled( line : Line, ps : List[Int] ) = {
     ps.foreach( (p) => { assertTrue( line.cells(p).filled() )})
   }
+
+  def assertBlank( line : Line, ps : List[Int] ) = {
+    ps.foreach( (p) => { assertTrue( line.cells(p).blank() )})
+  }
 }

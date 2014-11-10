@@ -1,6 +1,6 @@
 package com.github.scnonogram
 
-import com.github.scnonogram.rule.{EdgePushout, Overlap}
+import com.github.scnonogram.rule._
 
 class Solver {
 
@@ -11,22 +11,26 @@ object Solver {
   def main(args : Array[String]) {
     Console.println("solver")
 
-    val grid = Parser.parse(Parser.example2)
+    val grid = Parser.parse(Parser.example3)
     Generator.possibles(grid)
-
-    Grid.print(grid)
-    Grid.printHints(grid)
-    Grid.printPossibleCounts(grid)
 
     Overlap.apply(grid)
     grid.reducePossibles()
 
-    Grid.print(grid)
-    Grid.printPossibleCounts(grid)
-
     EdgePushout.apply(grid)
     grid.reducePossibles()
 
+    EliminatePossibles.apply(grid)
+    grid.reducePossibles()
+
+    EdgePullout.apply( grid )
+    grid.reducePossibles()
+    Grid.print(grid)
+    Grid.printPossibleCounts(grid)
+
+    while( PossibleXOR.apply(grid) > 0 ) {
+      grid.reducePossibles()
+    }
     Grid.print(grid)
     Grid.printPossibleCounts(grid)
   }

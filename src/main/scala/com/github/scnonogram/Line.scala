@@ -38,6 +38,10 @@ class Line {
     cells(pos).state = Filled()
   }
 
+  def blank( pos : Int ) = {
+    cells(pos).state = Blank()
+  }
+
   def reducePossibles() = {
 
     for( i <- 0 until cells.length ) {
@@ -61,5 +65,31 @@ class Line {
 
   def lastFill() : Int = {
     cells.lastIndexWhere( (c) => { c.filled() })
+  }
+
+  def solved() : Boolean = { cells.forall( (c) => { c.solved() }) }
+
+  def solve( src : String ) = {
+    for( i <- 0 until src.length ){
+      src(i) match {
+        case '1' => {
+          cells(i).state = Filled()
+        }
+        case '0' => {
+          cells(i).state = Blank()
+        }
+        case _ => {
+          // throw an exception?
+        }
+      }
+    }
+  }
+
+  def fillEnd( start : Int = 0 ) : Int = {
+    cells.indexWhere(  (c) => { !c.filled() }, start) - 1
+  }
+
+  def fillStart( end : Int = 0 ) : Int = {
+    cells.lastIndexWhere(  (c) => { !c.filled() }, end ) + 1
   }
 }
