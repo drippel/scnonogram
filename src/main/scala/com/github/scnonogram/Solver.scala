@@ -1,6 +1,6 @@
 package com.github.scnonogram
 
-import com.github.scnonogram.rule.Overlap
+import com.github.scnonogram.rule.{EdgePushout, Overlap}
 
 class Solver {
 
@@ -19,6 +19,12 @@ object Solver {
     Grid.printPossibleCounts(grid)
 
     Overlap.apply(grid)
+    grid.reducePossibles()
+
+    Grid.print(grid)
+    Grid.printPossibleCounts(grid)
+
+    EdgePushout.apply(grid)
     grid.reducePossibles()
 
     Grid.print(grid)

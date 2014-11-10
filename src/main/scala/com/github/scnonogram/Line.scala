@@ -54,4 +54,12 @@ class Line {
     }
 
   }
+
+  def firstFill() : Int = {
+    cells.indexWhere( (c) => { c.filled() })
+  }
+
+  def lastFill() : Int = {
+    cells.lastIndexWhere( (c) => { c.filled() })
+  }
 }
