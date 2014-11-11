@@ -11,33 +11,24 @@ object Solver {
   def main(args : Array[String]) {
     Console.println("solver")
 
+    Console.println("generate...")
     val start = System.currentTimeMillis()
 
-    val grid = Parser.parse(Parser.example3)
+    val grid = Parser.parse(Parser.example2)
     Generator.possibles(grid)
 
     val gen = System.currentTimeMillis()
-    // Overlap.apply(grid)
-    // grid.reducePossibles()
-
-    // EdgePushout.apply(grid)
-    // grid.reducePossibles()
-
-    // EliminatePossibles.apply(grid)
-    // grid.reducePossibles()
-
-    // EdgePullout.apply( grid )
-    // grid.reducePossibles()
-    // Grid.print(grid)
-    // Grid.printPossibleCounts(grid)
 
     var iters=0
 
+    Console.println("solve...")
+    // PossibleXOR.apply(grid)
     while( PossibleXOR.apply(grid) > 0 ) {
-      grid.reducePossibles()
+    grid.reducePossibles()
       iters += 1
-      // Console.println(iters)
-    }
+      Console.println(iters)
+      Grid.print(grid)
+     }
 
     val solve = System.currentTimeMillis()
 

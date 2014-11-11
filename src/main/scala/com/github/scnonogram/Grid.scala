@@ -4,14 +4,15 @@ import scala.collection.mutable.ListBuffer
 
 class Grid(val size : Int ) {
 
-  val cells = Array.fill(size,size){ new Cell() }
+  var cells = Array.fill(size,size){ -1 }
 
   val rows = {
     val rs = ListBuffer[Line]()
     for( y <- 0 until size ){
-      val r = new Line()
+      val r = new Line(this)
       for( x <- 0 until size ){
-        r.cells += cells(x)(y)
+        val c = (x,y)
+        r.cells += c
       }
       rs += r
     }
@@ -21,9 +22,10 @@ class Grid(val size : Int ) {
   val cols = {
     val rs = ListBuffer[Line]()
     for( x <- 0 until size ){
-      val r = new Line()
+      val r = new Line(this)
       for( y <- 0 until size ){
-        r.cells += cells(x)(y)
+        val c = (x,y)
+        r.cells += c
       }
       rs += r
     }
@@ -47,7 +49,13 @@ object Grid {
     for( i <- 0 until grid.rows.length ){
       Console.print(" | ")
       for( j <- 0 until grid.rows(i).cells.length ){
-        Console.print( grid.rows(i).cells(j) )
+        val cell = grid.rows(i).cells(j)
+        val c = grid.cells(cell._1)(cell._2) match {
+          case 1 => {'0'}
+          case 0 => {'x'}
+          case _  => {'.'}
+        }
+        Console.print(c)
           if( ( j + 1 ) % 5 == 0 ){
             Console.print(" | ")
           }
