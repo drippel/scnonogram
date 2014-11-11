@@ -42,6 +42,9 @@ object Generator {
   }
 
   def addPossible( line : Line, s : String, bitCount : Int, blockLengths : ListBuffer[Int] ) : Unit = {
+    // same number of filled cells
+    // same number of blocks
+    // and same order of blocks
     if( line.blockSum() == bitCount
       && line.blocks.length == blockLengths.length
       && sameOrder( line, blockLengths )){
