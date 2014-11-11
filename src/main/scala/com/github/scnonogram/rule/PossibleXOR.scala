@@ -53,7 +53,7 @@ object PossibleXOR extends Rule {
             line.blank(i)
           }
           case '.' => {
-            Console.println("nope " + i)
+            // Console.println("nope " + i)
           }
 
         }
