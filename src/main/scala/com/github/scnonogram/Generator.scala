@@ -3,6 +3,8 @@ package com.github.scnonogram
 import org.apache.commons.lang3.StringUtils
 
 import scala.collection.mutable.ListBuffer
+import scala.collection.parallel.ForkJoinTaskSupport
+import scala.concurrent.forkjoin.ForkJoinPool
 
 class Generator {
 
@@ -11,10 +13,24 @@ class Generator {
 object Generator {
 
   def possibles( grid : Grid ) = {
+    var gens = ListBuffer[String]()
     for( i <- 0 until scala.math.pow(2, grid.size).toInt ) {
-      val s = StringUtils.leftPad(i.toBinaryString, 25, '0')
-      addPossible(grid, s)
+      gens += StringUtils.leftPad(i.toBinaryString, 25, '0')
+      if( i % 250000 == 0 ){
+        addPossibles(grid,gens.toList)
+        gens.clear()
+      }
     }
+    addPossibles(grid,gens.toList)
+
+  }
+
+  def addPossibles( grid : Grid, ps : List[String] ) = {
+
+    val parps = ps.par
+    parps.tasksupport = new ForkJoinTaskSupport(new ForkJoinPool(5))
+    parps.map( (s) => { addPossible(grid, s) })
+
   }
 
   def count( s : String ) : Int = {
