@@ -30,50 +30,54 @@ object Generator {
 
   def addPossible( grid : Grid, s : String ) : Unit  ={
     val bitCount = count(s)
-    val blocks = stringToBlocks(s)
-    val blockLengths = blocks.map( (b) => { b.len } )
+    val blockLengths = stringToBlocks(s)
 
         for( row <- grid.rows ) {
-          addPossible(row, s, bitCount, blocks, blockLengths)
+          addPossible(row, s, bitCount, blockLengths)
         }
 
         for( col <- grid.cols ) {
-          addPossible(col, s, bitCount, blocks, blockLengths)
+          addPossible(col, s, bitCount, blockLengths)
         }
   }
 
-  def addPossible( line : Line, s : String, bitCount : Int, blocks : ListBuffer[Block], blockLengths : ListBuffer[Int] ) : Unit = {
+  def addPossible( line : Line, s : String, bitCount : Int, blockLengths : ListBuffer[Int] ) : Unit = {
     if( line.blockSum() == bitCount
-      && line.blocks.length == blocks.length
+      && line.blocks.length == blockLengths.length
       && sameOrder( line, blockLengths )){
       line.possibles += s
     }
   }
 
 
-  def stringToBlocks( src : String ) : ListBuffer[Block] = {
+  def stringToBlocks( src : String ) : ListBuffer[Int] = {
 
-    val blocks = ListBuffer[Block]()
+    val blocks = ListBuffer[Int]()
 
-    var currBlock : Block = null
+    var currBlock : Int = -1
     for( i <- 0 until src.length ){
 
       src(i) match {
         case '1' => {
-          if( currBlock == null ){
-            currBlock = new Block(1)
-            blocks += currBlock
+          if( currBlock == -1 ){
+            // start a block
+            currBlock = 1
           }
           else {
-            currBlock.len += 1
+            currBlock += 1
           }
         }
         case '0' => {
-          if( currBlock != null ){
-            currBlock = null
+          if( currBlock != -1 ){
+            blocks += currBlock
+            currBlock = -1
           }
         }
       }
+    }
+
+    if( currBlock != -1 ){
+      blocks += currBlock
     }
 
     blocks

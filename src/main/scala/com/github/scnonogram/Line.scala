@@ -6,19 +6,13 @@ class Line( grid : Grid ) {
 
   val cells = ListBuffer[(Int,Int)]()
 
-  val blocks = ListBuffer[Block]()
+  val blocks = ListBuffer[Int]()
   var possibles = ListBuffer[String]()
 
-  var blockLens = ListBuffer[Int]()
   var blockSums = -1
 
 
-  def blockLengths() : ListBuffer[Int] = {
-    if( blockLens.isEmpty ){
-      blockLens = blocks.map( _.len )
-    }
-    blockLens
-  }
+  def blockLengths() : ListBuffer[Int] = { blocks }
 
   def blockSum() : Int = {
 

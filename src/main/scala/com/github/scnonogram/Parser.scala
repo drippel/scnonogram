@@ -127,7 +127,7 @@ object Parser {
 
     val lens = StringUtils.split(raw,",")
     for( len <- lens ){
-      line.blocks += new Block(len.toInt)
+      line.blocks += len.toInt
     }
 
   }
